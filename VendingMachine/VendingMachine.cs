@@ -11,6 +11,7 @@ namespace VendingMachineProject
             CoinBank = new CoinData();
             Inventory = new VendingMachinProduct();
         }
+        #region variables
         // where we insert money
         public CoinData CoinSlot { get; private set; }
 
@@ -18,27 +19,19 @@ namespace VendingMachineProject
         public CoinData CoinReturn { get; private set; }
         public CoinData CoinBank { get; private set; }
         public VendingMachinProduct Inventory { get; private set; }
-
-        // Insert coins into the coin slot.
-        public void Insert(Coin coin, int num)
-        {
-            CoinSlot.AddCoins(coin, num);
-        }
-
-        // Add products to the invenory
-        public void AddProduct(MachineProducts product, int num)
-        {
-            Inventory.AddProduct(product, num);
-        }
-
-        // Add money he the coin bank. 
-        public void AddToBank(Coin coin, int num)
-        {
-            CoinBank.AddCoins(coin, num);
-        }
         private string TemporaryDisplay { get; set; }
+
         private string ReturnMoney = string.Empty;
 
+        #endregion
+
+
+
+        /// <summary>
+        /// method is use to dispense the coin from the machine
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public Tuple<string, string> Dispense(MachineProducts product)
         {
             double price = GetPrice(product);
@@ -76,16 +69,19 @@ namespace VendingMachineProject
             return new Tuple<string, string>(TemporaryDisplay, ReturnMoney);
         }
 
-        //Return all coins back to the user.
+        /// <summary>
+        /// Return all coins back to the user.
+        /// </summary>
         public void ReturnCoins()
         {
             CoinSlot.EmptyInto(CoinReturn);
         }
-        public double ReturnCoinsToUser()
-        {
-            return CoinReturn.Value;
-        }
 
+        /// <summary>
+        /// Get price for the product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public double GetPrice(MachineProducts product)
         {
             double price = 0;
@@ -102,6 +98,27 @@ namespace VendingMachineProject
                 price = .65;
             }
             return price;
+        }
+        public double ReturnCoinsToUser()
+        {
+            return CoinReturn.Value;
+        }
+        // Insert coins into the coin slot.
+        public void Insert(Coin coin, int num)
+        {
+            CoinSlot.AddCoins(coin, num);
+        }
+
+        // Add products to the invenory
+        public void AddProduct(MachineProducts product, int num)
+        {
+            Inventory.AddProduct(product, num);
+        }
+
+        // Add money he the coin bank. 
+        public void AddToBank(Coin coin, int num)
+        {
+            CoinBank.AddCoins(coin, num);
         }
     }
 }

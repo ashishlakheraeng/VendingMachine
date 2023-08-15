@@ -33,12 +33,12 @@ namespace VendingMachineProject
                 Console.WriteLine("Cost of " + (MachineProducts)chooseProduct + " = " + _vendingMachine.GetPrice((MachineProducts)chooseProduct) + "$");
                 TakeCointInput();
                 var returnData = _vendingMachine.Dispense((MachineProducts)chooseProduct);
-                Console.WriteLine(returnData.Item1);
+                Console.WriteLine(returnData.Item1);// Item 1 for display the mgs
                 if (returnData.Item1 == "Please insert more coin")
                 {
                     goto addMoreCoin;
                 }
-                Console.WriteLine("Collect your Amount:-" + returnData.Item2);
+                Console.WriteLine("Collect your Amount:-" + returnData.Item2); // item 2 for return the money
                 Console.WriteLine("If you want more item press 1");
                 string inputContinue = Console.ReadLine();
                 int.TryParse(inputContinue, out int continueProcess);
@@ -48,7 +48,6 @@ namespace VendingMachineProject
                 }
                 if (continueProcess == 1)
                     goto Start;
-
             }
             else
             {
@@ -57,6 +56,9 @@ namespace VendingMachineProject
             }
         }
 
+        /// <summary>
+        /// Method is used to take inout from the user
+        /// </summary>
         private static void TakeCointInput()
         {
             Console.WriteLine("please insert the below coins only");
@@ -100,6 +102,10 @@ namespace VendingMachineProject
             Console.ReadLine();
             Environment.Exit(0);
         }
+
+        /// <summary>
+        /// Add some number's of coin into the machine
+        /// </summary>
         private static void AddStaticDataInVendorMachine()
         {
             _vendingMachine.AddToBank(Coin.Nickels, 10);

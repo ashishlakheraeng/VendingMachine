@@ -18,14 +18,12 @@ namespace VendingMachineProject
                     CalculateNumberOfCoin(Coin.Nickels) * CalculateCoinValue(Coin.Nickels);
             }
         }
-        private double DispenseCoinInto(CoinData collection, Coin coin, double amount)
-        {
-            double numDispensed = Math.Min(amount / CalculateCoinValue(coin), CalculateNumberOfCoin(coin));
-            collection.AddCoins(coin, numDispensed);
-            RemoveCoins(coin, numDispensed);
 
-            return numDispensed;
-        }
+        /// <summary>
+        /// valuation of different different coins
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="amount"></param>
         internal void DispenseInto(CoinData collection, double amount)
         {
             // Use a cascading subtraction system, like you're taught in 
@@ -40,6 +38,22 @@ namespace VendingMachineProject
             amount -= numNickelsDispensed * CalculateCoinValue(Coin.Nickels);
 
         }
+
+        /// <summary>
+        /// calculate total number of dispensed coin
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="coin"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        private double DispenseCoinInto(CoinData collection, Coin coin, double amount)
+        {
+            double numDispensed = Math.Min(amount / CalculateCoinValue(coin), CalculateNumberOfCoin(coin));
+            collection.AddCoins(coin, numDispensed);
+            RemoveCoins(coin, numDispensed);
+            return numDispensed;
+        }
+
         internal void EmptyInto(CoinData collection)
         {
             foreach (var kvp in Coins)
@@ -48,6 +62,12 @@ namespace VendingMachineProject
             }
             Coins.Clear();
         }
+
+        /// <summary>
+        /// Add coins into the mcahine
+        /// </summary>
+        /// <param name="InsertedCoin"></param>
+        /// <param name="number"></param>
         internal void AddCoins(Coin InsertedCoin, double number)
         {
             if (Coins.ContainsKey(InsertedCoin))
@@ -55,6 +75,12 @@ namespace VendingMachineProject
             else
                 Coins.Add(InsertedCoin, number);
         }
+
+        /// <summary>
+        /// remove coins from machine
+        /// </summary>
+        /// <param name="coin"></param>
+        /// <param name="num"></param>
         private void RemoveCoins(Coin coin, double num)
         {
             if (Coins.ContainsKey(coin))
@@ -62,6 +88,12 @@ namespace VendingMachineProject
                 Coins[coin] -= Math.Min(num, Coins[coin]);
             }
         }
+
+        /// <summary>
+        /// Calculated value of each coin
+        /// </summary>
+        /// <param name="coin"></param>
+        /// <returns></returns>
         private double CalculateCoinValue(Coin coin)
         {
             double value = 0;
@@ -74,6 +106,12 @@ namespace VendingMachineProject
 
             return value;
         }
+
+        /// <summary>
+        /// calculate number of coins in machine
+        /// </summary>
+        /// <param name="coin"></param>
+        /// <returns></returns>
         public double CalculateNumberOfCoin(Coin coin)
         {
             double count = 0;
